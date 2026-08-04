@@ -80,7 +80,7 @@ This project addresses that challenge by building a scalable cloud-native data p
 
 # 📐 Solution Architecture
 
-> *(Images/Architecture.png)*
+![Solution Architecture](images/Architecture.png)
 
 ```
 Kafka Producer
