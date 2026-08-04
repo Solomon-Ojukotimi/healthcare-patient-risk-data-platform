@@ -1,0 +1,164 @@
+-- =============================================
+-- Azure Storage Extensions
+-- =============================================
+
+INSTALL azure;
+LOAD azure;
+
+INSTALL delta;
+LOAD delta;
+
+CREATE SECRET azure_adls_secret (
+
+TYPE AZURE,
+
+CONNECTION_STRING 'DefaultEndpointsProtocol=https;
+AccountName=<YOUR_STORAGE_ACCOUNT>;
+AccountKey=<YOUR_STORAGE_KEY>;
+EndpointSuffix=core.windows.net'
+
+);
+
+-----------------------------------------------------
+-- Schemas
+-----------------------------------------------------
+
+CREATE SCHEMA IF NOT EXISTS gold;
+
+CREATE SCHEMA IF NOT EXISTS sandbox;
+
+CREATE SCHEMA IF NOT EXISTS analytical_mart;
+
+-----------------------------------------------------
+-- Delta Views
+-----------------------------------------------------
+
+CREATE OR REPLACE VIEW dim_patient AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_dim_patient');
+
+
+
+CREATE OR REPLACE VIEW dim_condition AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_dim_condition');
+
+
+
+CREATE OR REPLACE VIEW dim_date AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_dim_date');
+
+
+
+CREATE OR REPLACE VIEW fact_encounters AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_fact_encounters');
+
+
+
+CREATE OR REPLACE VIEW ml_readmission_features AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_ml_readmission_features');
+
+
+
+CREATE OR REPLACE VIEW data_quality_audit AS
+
+SELECT *
+
+FROM delta_scan('abfss://gold@healthcaredatatimi.dfs.core.windows.net/gold_data_quality_audit');
+
+-----------------------------------------------------
+-- Analytical Mart
+-----------------------------------------------------
+
+CREATE OR REPLACE TABLE analytical_mart.readmission_risk_analytics AS
+
+SELECT
+
+    f.encounter_id,
+
+    p.patient_id,
+
+    p.gender,
+
+    p.age,
+
+    p.age_group,
+
+    p.marital_status,
+
+    f.admission_date,
+
+    f.discharge_date,
+
+    f.length_of_stay_days,
+
+    f.admission_type,
+
+    f.discharge_status,
+
+    f.is_30day_readmission,
+
+    f.comorbidity_count,
+
+    f.high_risk_comorbidity_count,
+
+    f.prescribed_meds_count,
+
+    f.procedures_performed_count,
+
+    m.feature_created_at AS model_features_timestamp,
+
+    CURRENT_TIMESTAMP AS cached_at
+
+FROM fact_encounters f
+
+LEFT JOIN dim_patient p
+
+ON f.patient_id = p.patient_id
+
+AND p.is_current = TRUE
+
+LEFT JOIN ml_readmission_features m
+
+ON f.encounter_id = m.encounter_id;
+
+-----------------------------------------------------
+-- Patient Feature View
+-----------------------------------------------------
+
+CREATE OR REPLACE VIEW analytical_mart.v_patient_readmission_features AS
+
+SELECT
+
+    patient_id,
+
+    COUNT(encounter_id) AS total_historical_encounters,
+
+    ROUND(AVG(length_of_stay_days),2) AS avg_length_of_stay,
+
+    MAX(is_30day_readmission) AS historical_readmit_flag,
+
+    SUM(is_30day_readmission) AS total_30day_readmissions,
+
+    ROUND(AVG(comorbidity_count),2) AS avg_comorbidities,
+
+    ROUND(AVG(high_risk_comorbidity_count),2) AS avg_high_risk_comorbidities,
+
+    ROUND(AVG(prescribed_meds_count),2) AS avg_prescribed_meds
+
+FROM analytical_mart.readmission_risk_analytics
+
+GROUP BY patient_id;

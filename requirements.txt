@@ -1,0 +1,10 @@
+# ==========================================
+# Healthcare Patient Risk Data Platform
+# Python Dependencies
+# ==========================================
+
+# Kafka Producer
+kafka-python>=2.0.2
+
+# Environment Variables
+python-dotenv>=1.0.0

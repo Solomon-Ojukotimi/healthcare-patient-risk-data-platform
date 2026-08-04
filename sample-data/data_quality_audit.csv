@@ -1,0 +1,88 @@
+"table_name","rules_applied","total_records","passed_records","quarantined_records","pass_rate_pct","validated_at"
+healthcare_catalog.default.gold_dim_patient,"patient_id IS NOT NULL AND 
+            coalesce(age, 0) >= 0 AND 
+            coalesce(age, 0) <= 120 AND 
+            to_date(birth_date) <= current_date()",414,414,0,100.0,"2026-07-30 18:52:56.999"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND coalesce(is_chronic_condition, 0) IN (0, 1)",65,65,0,100.0,"2026-07-30 18:52:58.388"
+healthcare_catalog.default.gold_fact_encounters,"patient_id IS NOT NULL AND 
+            coalesce(length_of_stay_days, 0) >= 0 AND 
+            coalesce(is_30day_readmission, 0) IN (0, 1) AND 
+            to_date(discharge_date) >= to_date(admission_date) AND 
+            coalesce(comorbidity_count, 0) >= 0 AND 
+            coalesce(prescribed_meds_count, 0) >= 0",1189,1189,0,100.0,"2026-07-30 18:53:00.034"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            coalesce(feature_patient_age, 0) >= 0 AND 
+            coalesce(label_is_30day_readmission, 0) IN (0, 1) AND 
+            coalesce(feature_length_of_stay_days, 0) >= 0",12386,12386,0,100.0,"2026-07-30 18:53:01.527"
+healthcare_catalog.default.gold_dim_patient,"patient_id IS NOT NULL AND 
+            coalesce(age, 0) >= 0 AND 
+            coalesce(age, 0) <= 120 AND 
+            to_date(birth_date) <= current_date()",371,371,0,100.0,"2026-07-30 16:30:14.602"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND coalesce(is_chronic_condition, 0) IN (0, 1)",62,62,0,100.0,"2026-07-30 16:30:16.348"
+healthcare_catalog.default.gold_fact_encounters,"patient_id IS NOT NULL AND 
+            coalesce(length_of_stay_days, 0) >= 0 AND 
+            coalesce(is_30day_readmission, 0) IN (0, 1) AND 
+            to_date(discharge_date) >= to_date(admission_date) AND 
+            coalesce(comorbidity_count, 0) >= 0 AND 
+            coalesce(prescribed_meds_count, 0) >= 0",1126,1126,0,100.0,"2026-07-30 16:30:18.079"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            coalesce(feature_patient_age, 0) >= 0 AND 
+            coalesce(label_is_30day_readmission, 0) IN (0, 1) AND 
+            coalesce(feature_length_of_stay_days, 0) >= 0",11066,11066,0,100.0,"2026-07-30 16:30:19.618"
+healthcare_catalog.default.gold_dim_patient,"patient_id IS NOT NULL AND 
+            coalesce(age, 0) >= 0 AND 
+            coalesce(age, 0) <= 120 AND 
+            to_date(birth_date) <= current_date()",325,325,0,100.0,"2026-07-30 16:19:18.240"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND coalesce(is_chronic_condition, 0) IN (0, 1)",36,36,0,100.0,"2026-07-30 16:19:20.119"
+healthcare_catalog.default.gold_fact_encounters,"patient_id IS NOT NULL AND 
+            coalesce(length_of_stay_days, 0) >= 0 AND 
+            coalesce(is_30day_readmission, 0) IN (0, 1) AND 
+            to_date(discharge_date) >= to_date(admission_date) AND 
+            coalesce(comorbidity_count, 0) >= 0 AND 
+            coalesce(prescribed_meds_count, 0) >= 0",923,923,0,100.0,"2026-07-30 16:19:21.769"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            coalesce(feature_patient_age, 0) >= 0 AND 
+            coalesce(label_is_30day_readmission, 0) IN (0, 1) AND 
+            coalesce(feature_length_of_stay_days, 0) >= 0",9534,9534,0,100.0,"2026-07-30 16:19:23.227"
+healthcare_catalog.default.gold_dim_patient,"patient_id IS NOT NULL AND 
+            coalesce(age, 0) >= 0 AND 
+            coalesce(age, 0) <= 120 AND 
+            to_date(birth_date) <= current_date()",30,30,0,100.0,"2026-07-28 14:48:23.734"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND coalesce(is_chronic_condition, 0) IN (0, 1)",36,36,0,100.0,"2026-07-28 14:48:25.091"
+healthcare_catalog.default.gold_fact_encounters,"patient_id IS NOT NULL AND 
+            coalesce(length_of_stay_days, 0) >= 0 AND 
+            coalesce(is_30day_readmission, 0) IN (0, 1) AND 
+            to_date(discharge_date) >= to_date(admission_date) AND 
+            coalesce(comorbidity_count, 0) >= 0 AND 
+            coalesce(prescribed_meds_count, 0) >= 0",568,568,0,100.0,"2026-07-28 14:48:26.495"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            coalesce(feature_patient_age, 0) >= 0 AND 
+            coalesce(label_is_30day_readmission, 0) IN (0, 1) AND 
+            coalesce(feature_length_of_stay_days, 0) >= 0",1136,1136,0,100.0,"2026-07-28 14:48:28.017"
+healthcare_catalog.default.gold_dim_patient,"patient_id IS NOT NULL AND 
+            coalesce(age, 0) >= 0 AND 
+            coalesce(age, 0) <= 120 AND 
+            to_date(birth_date) <= current_date()",22,22,0,100.0,"2026-07-27 21:41:35.564"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND coalesce(is_chronic_condition, 0) IN (0, 1)",36,36,0,100.0,"2026-07-27 21:41:36.883"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            coalesce(feature_patient_age, 0) >= 0 AND 
+            coalesce(label_is_30day_readmission, 0) IN (0, 1) AND 
+            coalesce(feature_length_of_stay_days, 0) >= 0",988,988,0,100.0,"2026-07-27 21:41:38.699"
+healthcare_catalog.default.gold_dim_patient,patient_id IS NOT NULL AND age >= 0 AND age <= 120 AND birth_date <= current_date(),22,22,0,100.0,"2026-07-27 21:35:57.167"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND is_chronic_condition IN (0, 1)",36,36,0,100.0,"2026-07-27 21:35:58.509"
+healthcare_catalog.default.gold_fact_encounters,"length_of_stay_days >= 0 AND 
+            is_30day_readmission IN (0, 1) AND 
+            discharge_date >= admission_date AND 
+            comorbidity_count >= 0 AND 
+            prescribed_meds_count >= 0 AND 
+            patient_sk IS NOT NULL",568,0,568,0.0,"2026-07-27 21:36:03.069"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            feature_patient_age >= 0 AND 
+            label_is_30day_readmission IN (0, 1) AND 
+            feature_length_of_stay_days >= 0",988,988,0,100.0,"2026-07-27 21:36:04.473"
+healthcare_catalog.default.gold_dim_patient,patient_id IS NOT NULL AND age >= 0 AND age <= 120 AND birth_date <= current_date(),22,22,0,100.0,"2026-07-27 21:33:44.326"
+healthcare_catalog.default.gold_dim_condition,"diagnosis_code IS NOT NULL AND is_chronic_condition IN (0, 1)",36,36,0,100.0,"2026-07-27 21:33:45.979"
+healthcare_catalog.default.gold_ml_readmission_features,"feature_patient_age IS NOT NULL AND 
+            feature_patient_age >= 0 AND 
+            label_is_30day_readmission IN (0, 1) AND 
+            feature_length_of_stay_days >= 0",988,988,0,100.0,"2026-07-27 21:33:47.970"

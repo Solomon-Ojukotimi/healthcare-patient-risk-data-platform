@@ -1,0 +1,45 @@
+{
+  "name": "Healthcare_FHIR_Pipeline_Job",
+  "max_concurrent_runs": 1,
+  "timeout_seconds": 0,
+  "performance_target": "PERFORMANCE_OPTIMIZED",
+  "queue": {
+    "enabled": true
+  },
+  "tasks": [
+    {
+      "task_key": "Bronze_Ingestion",
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/notebooks/bronze/01_Bronze_Raw_Ingestion",
+        "source": "WORKSPACE"
+      }
+    },
+    {
+      "task_key": "Silver_Transformation",
+      "depends_on": [
+        {
+          "task_key": "Bronze_Ingestion"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/notebooks/silver/02_Silver_FHIR_Processing",
+        "source": "WORKSPACE"
+      }
+    },
+    {
+      "task_key": "Gold_Analytics",
+      "depends_on": [
+        {
+          "task_key": "Silver_Transformation"
+        }
+      ],
+      "run_if": "ALL_SUCCESS",
+      "notebook_task": {
+        "notebook_path": "/Workspace/notebooks/gold/03_Gold_Readmission_Analytics",
+        "source": "WORKSPACE"
+      }
+    }
+  ]
+}
